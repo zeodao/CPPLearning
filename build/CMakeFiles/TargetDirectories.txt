@@ -1,3 +1,0 @@
-D:/code/CPPLearning/build/CMakeFiles/ZTool.dir
-D:/code/CPPLearning/build/CMakeFiles/ALL_BUILD.dir
-D:/code/CPPLearning/build/CMakeFiles/ZERO_CHECK.dir

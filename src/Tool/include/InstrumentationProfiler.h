@@ -4,7 +4,6 @@
 #include <chrono>
 #include <fstream>
 #include <string>
-
 #include <thread>
 
 #define ZTOOLPROFILE true
@@ -28,12 +27,12 @@ struct InstrumentationSession {
 };
 
 class Instrumentor {
-private:
+ private:
   InstrumentationSession *m_CurrentSession;
   std::ofstream m_OutputStream;
   int m_ProfileCount;
 
-public:
+ public:
   Instrumentor() : m_CurrentSession(nullptr), m_ProfileCount(0) {}
 
   void BeginSession(const std::string &name,
@@ -52,8 +51,7 @@ public:
   }
 
   void WriteProfile(const ProfileResult &result) {
-    if (m_ProfileCount++ > 0)
-      m_OutputStream << ",";
+    if (m_ProfileCount++ > 0) m_OutputStream << ",";
 
     std::string name = result.Name;
     std::replace(name.begin(), name.end(), '"', '\'');
@@ -88,14 +86,13 @@ public:
 };
 
 class InstrumentationTimer {
-public:
+ public:
   InstrumentationTimer(const char *name) : m_Name(name), m_Stopped(false) {
     m_StartTimepoint = std::chrono::high_resolution_clock::now();
   }
 
   ~InstrumentationTimer() {
-    if (!m_Stopped)
-      Stop();
+    if (!m_Stopped) Stop();
   }
 
   void Stop() {
@@ -117,9 +114,9 @@ public:
     m_Stopped = true;
   }
 
-private:
+ private:
   const char *m_Name;
   std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;
   bool m_Stopped;
 };
-} // namespace Ztool
+}  // namespace Ztool

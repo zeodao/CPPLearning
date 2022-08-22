@@ -32,7 +32,5 @@
 *.app
 
 # cmake Caches
-!/build/.gitkeep
-!/bin/.gitkeep
-/build/
-/bin/
+build/
+bin/

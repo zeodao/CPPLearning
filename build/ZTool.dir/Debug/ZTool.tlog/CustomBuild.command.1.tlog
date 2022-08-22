@@ -1,6 +1,6 @@
-^E:\SOFTWARECODE\ZTOOL\CMAKELISTS.TXT
+^D:\CODE\CPPLEARNING\CMAKELISTS.TXT
 setlocal
-D:\Cmake\bin\cmake.exe -SE:/softwareCode/ZTool -BE:/softwareCode/ZTool/build --check-stamp-file E:/softwareCode/ZTool/build/CMakeFiles/generate.stamp
+D:\cmake\bin\cmake.exe -SD:/code/CPPLearning -BD:/code/CPPLearning/build --check-stamp-file D:/code/CPPLearning/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

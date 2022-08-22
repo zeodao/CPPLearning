@@ -15,7 +15,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "D:/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64/lib.exe"
+			"value" : "D:/VisualStudioCommunity/IDE/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/lib.exe"
 		},
 		{
 			"name" : "CMAKE_CACHEFILE_DIR",
@@ -27,7 +27,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "e:/softwareCode/ZTool/build"
+			"value" : "d:/code/CPPLearning/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -75,7 +75,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Cmake/bin/cmake.exe"
+			"value" : "D:/cmake/bin/cmake.exe"
 		},
 		{
 			"name" : "CMAKE_CONFIGURATION_TYPES",
@@ -99,7 +99,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Cmake/bin/cpack.exe"
+			"value" : "D:/cmake/bin/cpack.exe"
 		},
 		{
 			"name" : "CMAKE_CTEST_COMMAND",
@@ -111,7 +111,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Cmake/bin/ctest.exe"
+			"value" : "D:/cmake/bin/ctest.exe"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -398,18 +398,6 @@
 			"value" : "/debug /INCREMENTAL"
 		},
 		{
-			"name" : "CMAKE_EXPORT_COMPILE_COMMANDS",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
-				}
-			],
-			"type" : "BOOL",
-			"value" : "TRUE"
-		},
-		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
 			"properties" : 
 			[
@@ -443,7 +431,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Microsoft Visual Studio/2022/Community"
+			"value" : "D:/VisualStudioCommunity/IDE"
 		},
 		{
 			"name" : "CMAKE_GENERATOR_PLATFORM",
@@ -479,7 +467,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "E:/softwareCode/ZTool"
+			"value" : "D:/code/CPPLearning"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -491,7 +479,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Program Files (x86)/ZTools"
+			"value" : "C:/Program Files (x86)/ZTool"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -507,7 +495,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "D:/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64/link.exe"
+			"value" : "D:/VisualStudioCommunity/IDE/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/link.exe"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -795,7 +783,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/Cmake/share/cmake-3.23"
+			"value" : "D:/cmake/share/cmake-3.23"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1015,7 +1003,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/softwareCode/ZTool/build"
+			"value" : "D:/code/CPPLearning/build"
 		},
 		{
 			"name" : "ZTool_IS_TOP_LEVEL",
@@ -1039,43 +1027,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "E:/softwareCode/ZTool"
-		},
-		{
-			"name" : "ZTools_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "E:/softwareCode/ZTool/build"
-		},
-		{
-			"name" : "ZTools_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "ZTools_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "E:/softwareCode/ZTool"
+			"value" : "D:/code/CPPLearning"
 		}
 	],
 	"kind" : "cache",

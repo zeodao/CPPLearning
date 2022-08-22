@@ -25,9 +25,9 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_STANDARD_EXTENSIONS True)
-
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,999999")
 include_directories(${PROJECT_SOURCE_DIR}/src/include)
 
-aux_source_directory(${PROJECT_SOURCE_DIR}/src SRCS)
+file(GLOB_RECURSE SRCS src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SRCS})

@@ -1,6 +1,6 @@
-^E:\SOFTWARECODE\ZTOOL\BUILD\CMAKEFILES\54FE43673E10AB9B22F59D8CC3C75AD1\GENERATE.STAMP.RULE
+^D:\CODE\CPPLEARNING\BUILD\CMAKEFILES\F0F2CAD30D248EC3798C6989B4E24203\GENERATE.STAMP.RULE
 setlocal
-D:\Cmake\bin\cmake.exe -SE:/softwareCode/ZTool -BE:/softwareCode/ZTool/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/softwareCode/ZTool/build/ZTool.sln
+D:\cmake\bin\cmake.exe -SD:/code/CPPLearning -BD:/code/CPPLearning/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/code/CPPLearning/build/ZTool.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

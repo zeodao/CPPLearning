@@ -1,6 +1,6 @@
 #include "./include/InstrumentationProfiler.h"
 namespace Ztool {
-static constexpr size_t n = 1 << 28;
+static constexpr size_t n = 1 << 18;
 std::vector<float> a(n);
 
 static float CalculateFunc1(float x) {

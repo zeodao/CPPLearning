@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <fstream>
+#include <mutex>
 #include <string>
 #include <thread>
 
@@ -15,7 +16,7 @@
 #define ZTOOLPROFILE_FUNCTION()
 #endif
 namespace Ztool {
-void BenchMarkTest();
+void SessionDemo();
 struct ProfileResult {
   std::string Name;
   long long Start, End;
@@ -31,6 +32,7 @@ class Instrumentor {
   InstrumentationSession *m_CurrentSession;
   std::ofstream m_OutputStream;
   int m_ProfileCount;
+  std::mutex m_lock;
 
  public:
   Instrumentor() : m_CurrentSession(nullptr), m_ProfileCount(0) {}
@@ -51,6 +53,7 @@ class Instrumentor {
   }
 
   void WriteProfile(const ProfileResult &result) {
+    std::lock_guard<std::mutex> lock(m_lock);
     if (m_ProfileCount++ > 0) m_OutputStream << ",";
 
     std::string name = result.Name;
@@ -102,10 +105,10 @@ class InstrumentationTimer {
                           m_StartTimepoint)
                           .time_since_epoch()
                           .count();
-    long long end =
-        std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint)
-            .time_since_epoch()
-            .count();
+    long long end = std::chrono::time_point_cast<std::chrono::microseconds>(
+                          endTimepoint)
+                          .time_since_epoch()
+                          .count();
 
     uint32_t threadID =
         std::hash<std::thread::id>{}(std::this_thread::get_id());

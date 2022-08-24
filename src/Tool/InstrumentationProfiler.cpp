@@ -1,35 +1,55 @@
 #include "./include/InstrumentationProfiler.h"
+
+#include <array>
 namespace Ztool {
-static constexpr size_t n = 1 << 28;
-std::vector<float> a(n);
-
-static float CalculateFunc1(float x) {
-  return sinf(x) + cosf((x + 1) * x) * sqrtf(x * (x + 1));
-}
-
-static float CalculateFunc2(float x) { return sqrtf(x) * x; }
-
-#pragma optimize("", off)
-void TestFunciton1() {
-  ZTOOLPROFILE_FUNCTION();
-  for (size_t i = 0; i < n; i++) {
-    a[i] = CalculateFunc1(i);
+  void FuncA(){
+    ZTOOLPROFILE_FUNCTION();
+    std::chrono::milliseconds dura(200);
+    std::this_thread::sleep_for(dura);
   }
-}
-#pragma optimize("", on)
 
-#pragma optimize("", off)
-void TestFunciton2() {
-  ZTOOLPROFILE_FUNCTION();
-  for (size_t i = 0; i < n; i++) {
-    a[i] = CalculateFunc2(i);
+  void FuncB(){
+    ZTOOLPROFILE_FUNCTION();
+    std::chrono::milliseconds dura(150);
+    std::this_thread::sleep_for(dura);
   }
-}
-#pragma optimize("", on)
 
-void BenchMarkTest() {
-  ZTOOLPROFILE_FUNCTION();
-  TestFunciton1();
-  TestFunciton2();
-}
+  void Func1(){
+    ZTOOLPROFILE_FUNCTION();
+    std::chrono::milliseconds dura(2000);
+    std::this_thread::sleep_for(dura);
+    FuncA();
+  }
+
+  void Func2(){
+    ZTOOLPROFILE_FUNCTION();
+    std::chrono::milliseconds dura(1500);
+    std::this_thread::sleep_for(dura);
+    FuncB();
+  }
+
+  void Func3(){
+    ZTOOLPROFILE_FUNCTION();
+    std::chrono::milliseconds dura(2500);
+    std::this_thread::sleep_for(dura);
+    FuncA();
+    FuncB();
+  }
+
+  void SessionDemo(){
+    Instrumentor::Get().BeginSession("SessionDemo");
+
+    std::vector<std::thread> workers;
+
+    workers.push_back(std::thread(Func1));
+    workers.push_back(std::thread(Func2));
+    workers.push_back(std::thread(Func3));
+
+    for (auto& w : workers)
+    {
+      w.join();
+    }
+
+    Instrumentor::Get().EndSession();
+  }
 }  // namespace Ztool

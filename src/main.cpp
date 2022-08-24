@@ -3,9 +3,7 @@
 
 int main (int argc, char *argv[])
 {
-  Ztool::Instrumentor::Get().BeginSession("Profile");
-  Ztool::BenchMarkTest();
-  Ztool::Instrumentor::Get().EndSession();
+  Ztool::SessionDemo();
   std::cout << "Hello,world" << std::endl;
   return 0;
 }

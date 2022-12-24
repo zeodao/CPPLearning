@@ -11,7 +11,9 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "env": {"PATH": "${env:PATH}:${command:cmake.getLaunchTargetDirectory}"},
+            "env": {
+                "PATH": "${env:PATH}:${command:cmake.getLaunchTargetDirectory}"
+            },
             "stopOnEntry": false,
         },
         {

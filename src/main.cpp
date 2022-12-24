@@ -1,15 +1,19 @@
 #include <iostream>
+#include <numeric>
 
 #include "./Tool/include/InstrumentationProfiler.h"
 #include "./cppFeature/coroutines/include/coroutineTest.h"
 
-int main(int argc, char *argv[]) {
-  auto gen = Ztool::fibonacci_sequence(10);
-  std::cout << "finish coroutine Create!" << std::endl;
-  for (int i = 0; gen; i++) {
-    std::cout << "fib(" << i << ")=" << gen() << std::endl;
-  }
+struct plot
+{
+  std::vector<int> vint;
+  int int1;
+  float flo1;
+  std::string he;
+};
 
-  std::cout << "Hello,world" << std::endl;
-  return 0;
+
+int main(int argc, char *argv[]) {
+  plot plotS{{1,2,3,4}, 1, 1.0f, std::string("test Struct")};
+  std::cout << plotS.int1 << std::endl;
 }

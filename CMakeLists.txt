@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
+list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 project(ZTool LANGUAGES C CXX)
 
 message("PROJECT_NAME: ${PROJECT_NAME}")
@@ -15,8 +16,10 @@ if (PROJECT_BINARY_DIR STREQUAL PROJECT_SOURCE_DIR)
 endif()
 
 if (NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Debug)
+  set(CMAKE_BUILD_TYPE Release)
 endif()
+
+option(GOOGLE_BENCHMARK "USING GOOGLE_BENCHMARK" OFF)
 
 if (WIN32)
   add_definitions(-DNOMINMAX -D_USE_MATH_DEFINES)
@@ -30,6 +33,23 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_STANDARD_EXTENSIONS True)
 include_directories(${PROJECT_SOURCE_DIR}/src/include)
 
-file(GLOB_RECURSE SRCS src/*.cpp)
+if (GOOGLE_BENCHMARK) 
+  include(benchmark)
+  fetch_benchmark()
+  file(GLOB_RECURSE BENCHMARKS src/*.cpp)
+  list(FILTER BENCHMARKS EXCLUDE REGEX ".*main\\.cpp$")
+  message(STATUS "BENCHMARK SourceFIles:")
+  foreach(_file IN LISTS BENCHMARKS)
+    message(STATUS "${_file}")
+  endforeach()
+  add_executable(${PROJECT_NAME}BENCHMARK ${BENCHMARKS})
+  target_link_libraries(${PROJECT_NAME}BENCHMARK benchmark::benchmark)
+endif()
 
+file(GLOB_RECURSE SRCS src/*.cpp)
+list(FILTER SRCS EXCLUDE REGEX ".*benchmark\\.cpp$")
+message(STATUS "SRCS SourceFIles:")
+foreach(_file IN LISTS SRCS)
+  message(STATUS "${_file}")
+endforeach()
 add_executable(${PROJECT_NAME} ${SRCS})

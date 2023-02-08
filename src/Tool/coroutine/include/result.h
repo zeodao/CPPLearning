@@ -13,7 +13,7 @@ struct Result {
   explicit Result(std::exception_ptr &&exc_ptr) : mException_ptr(exc_ptr);
 
   // 得到结果或者重新抛出异常
-  T GetOrThrow() {
+  T getOrThrow() {
     if (mException_ptr) {
       std::rethrow_exception(mException_ptr);
     }

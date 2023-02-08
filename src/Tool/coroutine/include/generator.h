@@ -35,7 +35,6 @@ struct Generator {
   }
 
   T operator()() {
-    std::cout << "Call: " << __FUNCSIG__ << std::endl;
     fill();
     m_full = false;
     return std::move(h_.promise().value_);
@@ -46,7 +45,6 @@ struct Generator {
 
   void fill() {
     if (!m_full) {
-      std::cout << "calculate new Value" << std::endl;
       h_();
       if (h_.promise().exception_) {
         std::rethrow_exception(h_.promise().exception_);

@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef ZTOOL_RESULT_H
+#define ZTOOL_RESULT_H
+
 #include <exception>
 
 namespace Ztool {
@@ -25,4 +30,23 @@ struct Result {
   std::exception_ptr mException_ptr;
 };
 
+template <>
+struct Result<void>() {
+  explicit Result() = default;
+
+  explicit Result(std::exception_ptr &&exception_ptr)
+      : mException_ptr(exception_ptr) {}
+  
+  void getOrThrow(){
+    if (mException_ptr)
+    {
+      std::rethrow_exception(mException_ptr);
+    }
+  }
+
+ private:
+  std::exception_ptr mException_ptr;
+};
+
 }  // namespace Ztool
+#endif  // ZTOOL_RESULT_H

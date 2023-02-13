@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef ZTOOL_RESULT_H
 #define ZTOOL_RESULT_H
@@ -12,10 +12,10 @@ struct Result {
   explicit Result() = default;
 
   // 使用正常的结果来初始化
-  explicit Result(T &&value) : mValue(value);
+  explicit Result(T &&value) : mValue(value){}
 
   // 出现异常时的初始化方式
-  explicit Result(std::exception_ptr &&exc_ptr) : mException_ptr(exc_ptr);
+  explicit Result(std::exception_ptr &&exc_ptr) : mException_ptr(exc_ptr){}
 
   // 得到结果或者重新抛出异常
   T getOrThrow() {
@@ -31,7 +31,7 @@ struct Result {
 };
 
 template <>
-struct Result<void>() {
+struct Result<void> {
   explicit Result() = default;
 
   explicit Result(std::exception_ptr &&exception_ptr)

@@ -1,8 +1,12 @@
+﻿#pragma once
+
+#ifndef ZTOOL_TASK_H
+#define ZTOOL_TASK_H
+
 #include <coroutine>
 #include <functional>
 
-#include "result.h"
-#include "taskPromise.h"
+#include "TaskPromise.h"
 namespace Ztool {
 
 template <typename ResultType>
@@ -16,7 +20,7 @@ struct Task {
   Task(Task&) = delete;
   Task(Task&& task) noexcept : mHandle(std::exchange(task.mHandle, {})) {}
 
-  ~Task() noexcept{
+  ~Task() noexcept {
     if (mHandle) {
       mHandle.destroy();
     }
@@ -36,7 +40,7 @@ struct Task {
     return *this;
   }
 
-  Task& catch (std::function<void(std::exception&)>&& func) {
+  Task& catching(std::function<void(const std::exception&)>&& func) {
     mHandle.promise().on_complete([func](auto result) {
       try {
         result.getOrThrow();
@@ -47,21 +51,77 @@ struct Task {
     });
   }
 
-  Task& finally(std::function<void()>&& func) {
+  Task& finally(std::function<void(const std::exception&)>&& func) {
     mHandle.promise().on_completed([func](auto result) {
       try {
         result.getOrThrow();
       } catch (const std::exception& e) {
         func(e);
       }
-      return *this;
-    })
+    });
+    return *this;
   }
 
  private:
   std::coroutine_handle<promise_type> mHandle;
 };
 
+template <>
+struct Task<void> {
+  using promise_type = TaskPromise<void>;
 
+  explicit Task(std::coroutine_handle<promise_type> handle) noexcept
+      : mHandle(handle) {}
+
+  Task(Task&) = delete;
+  Task(Task&& task) noexcept : mHandle(std::exchange(task.mHandle, {})) {}
+
+  ~Task() noexcept {
+    if (mHandle) {
+      mHandle.destroy();
+    }
+  }
+
+  void get_result() { mHandle.promise().get_result(); }
+
+  Task& then(std::function<void()>&& func) {
+    mHandle.promise().on_completed([func](auto result) {
+      try {
+        result.getOrThrow();
+        func();
+      } catch (const std::exception& e) {
+        // 暂时不处理
+        // std::cerr << e.what() << '\n';
+      }
+    });
+    return *this;
+  }
+
+  Task& catching(std::function<void(const std::exception&)>&& func) {
+    mHandle.promise().on_completed([func](auto result) {
+      try {
+        result.getOrThrow();
+      } catch (const std::exception& e) {
+        func(e);
+      }
+    });
+    return *this;
+  }
+
+  Task& finally(std::function<void(const std::exception&)>&& func) {
+    mHandle.promise().on_completed([func](auto result) {
+      try {
+        result.getOrThrow();
+      } catch (const std::exception& e) {
+        func(e);
+      }
+    });
+    return *this;
+  }
+
+ private:
+  std::coroutine_handle<promise_type> mHandle;
+};
 
 }  // namespace Ztool
+#endif  // ZTOOL_TASK_H

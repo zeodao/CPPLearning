@@ -3,17 +3,19 @@
 #ifndef ZTOOL_TASKAWAITER_H
 #define ZTOOL_TASKAWAITER_H
 
+#define __cpp_lib_corutine
 #include <coroutine>
 
-#include "task.h"
+namespace Ztool {
+template<typename ResultType>
+struct Task;
 
-namespace ZTool {
 template <typename Result>
 struct TaskAwaiter {
-  explicit TaskAwaiter(Task<Result> &&task) noexcept : task(std::move()) {}
+  explicit TaskAwaiter(Task<Result> &&task) noexcept : mTask(std::move(task)) {}
 
   TaskAwaiter(TaskAwaiter &&completion) noexcept
-      : task(std::exchange(completion.task.{})) {}
+      : mTask(std::exchange(completion.mTask, {})) {}
 
   TaskAwaiter(TaskAwaiter &) = delete;
   TaskAwaiter &operator=(TaskAwaiter &) = delete;
@@ -21,13 +23,14 @@ struct TaskAwaiter {
   constexpr bool await_ready() const noexcept { return false; }
 
   void await_suspend(std::coroutine_handle<> handle) noexcept {
-    task.finally([handle]() { handle.resume(); });
+    mTask.finally([handle]() { handle.resume(); });
   }
 
-  Result await_resume() noexcept { return task.get_result(); }
+  Result await_resume() noexcept { return mTask.get_result(); }
 
-  private:
-  Task<Result> task;
+ private:
+  Task<Result> mTask;
 };
-}  // namespace ZTool
+
+}  // namespace Ztool
 #endif  // ZTOOL_TASKAWAITER_H

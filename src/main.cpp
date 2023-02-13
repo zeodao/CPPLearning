@@ -1,8 +1,8 @@
 #include <iostream>
 #include <numeric>
 
-#include "./cppfeature/coroutines/include/coroutinetest.h"
-#include "./tool/include/instrumentationprofiler.h"
+#include "./Tool/coroutine/include/Task.h"
+#include "./tool/profile/include/instrumentationprofiler.h"
 
 namespace fooSpace {
 template <typename T, T V>
@@ -32,7 +32,35 @@ constexpr char const* GetEnumName() {
 enum class num { one, two, three };
 }  // namespace fooSpace
 
+Task<int> simple_task2() {
+  Ztool::ZTOOLPROFILE_FUNCTION();
+  using namespace std::chrono_literals;
+  std::this_thread::sleep_for(1s);
+  co_return 2;
+}
+
+Task<int> simple_task3() {
+  Ztool::ZTOOLPROFILE_FUNCTION();
+  using namespace std::chrono_literals;
+  std::this_thread::sleep_for(2s);
+  co_return 3;
+}
+
+Task<int> simple_task() {
+  Ztool::ZTOOLPROFILE_FUNCTION();
+  using namespace std::chrono_literals;
+  auto result2 = co_await simple_task2();
+  auto result3 = co_await simple_task3();
+  co_return 1 + result2 + result3;
+}
+
 int main(int argc, char* argv[]) {
-  std::cout << fooSpace::GetEnumName<fooSpace::num, fooSpace::num::one>()
-            << std::endl;
+  auto simpleTask = simple_task();
+  simpleTask.then([](int i) {}).catching([](std::exception& e) {});
+  try {
+    auto i = simpleTask.get_result();
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << '\n';
+  }
+  return 0;
 }

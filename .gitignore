@@ -37,3 +37,6 @@ bin/
 
 #subModel
 modules/
+
+#performance analize info
+results.json

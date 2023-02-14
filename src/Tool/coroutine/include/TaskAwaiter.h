@@ -7,6 +7,7 @@
 #include <coroutine>
 
 namespace Ztool {
+
 template<typename ResultType>
 struct Task;
 

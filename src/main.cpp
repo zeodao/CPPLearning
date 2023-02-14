@@ -32,21 +32,21 @@ constexpr char const* GetEnumName() {
 enum class num { one, two, three };
 }  // namespace fooSpace
 
-Task<int> simple_task2() {
+Ztool::Task<int> simple_task2() {
   Ztool::ZTOOLPROFILE_FUNCTION();
   using namespace std::chrono_literals;
   std::this_thread::sleep_for(1s);
   co_return 2;
 }
 
-Task<int> simple_task3() {
+Ztool::Task<int> simple_task3() {
   Ztool::ZTOOLPROFILE_FUNCTION();
   using namespace std::chrono_literals;
   std::this_thread::sleep_for(2s);
   co_return 3;
 }
 
-Task<int> simple_task() {
+Ztool::Task<int> simple_task() {
   Ztool::ZTOOLPROFILE_FUNCTION();
   using namespace std::chrono_literals;
   auto result2 = co_await simple_task2();
@@ -55,12 +55,19 @@ Task<int> simple_task() {
 }
 
 int main(int argc, char* argv[]) {
+  Ztool::Instrumentor::Get().BeginSession("Coroutines");
+
   auto simpleTask = simple_task();
-  simpleTask.then([](int i) {}).catching([](std::exception& e) {});
+  simpleTask.then([](int i) { Ztool::ZTOOLPROFILE_FUNCTION(); })
+      .catching(
+          [](const std::exception& e) { Ztool::ZTOOLPROFILE_FUNCTION(); });
   try {
     auto i = simpleTask.get_result();
+    std::cout << "result: " << i << std::endl;
   } catch (const std::exception& e) {
     std::cerr << e.what() << '\n';
   }
+
+  Ztool::Instrumentor::Get().EndSession();
   return 0;
 }
